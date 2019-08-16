@@ -1,0 +1,6 @@
+.login-container {
+  height: 100vh;
+  width: 100%;
+  background-image: url("../../imagenesBase/login-fondo.jpg");
+  color: white!important;
+}
