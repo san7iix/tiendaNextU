@@ -10,12 +10,24 @@ class Navbar extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-sm navbar-light bg-faded">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <a className="brand-logo">{this.state.titulo}</a>
         <div className="collapse navbar-collapse justify-content-end">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <ion-icon name="cart"></ion-icon>
+              <a className="nav-link">
+                <ion-icon name="home"></ion-icon>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link">
+                <ion-icon name="cart"></ion-icon>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link">
+                <ion-icon name="log-in"></ion-icon>
+              </a>
             </li>
           </ul>
         </div>

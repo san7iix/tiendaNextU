@@ -24,7 +24,7 @@ class Login extends Component {
   login(e) {
     e.preventDefault();
     fire.auth().signInWithEmailAndPassword(this.state.email, this.state.password).then((u) => {}).catch((error) => {
-      this.state.error = 'Error en el inicio de sesión'
+      this.setState({ error :'Error en el inicio de sesión.'})
     });
   }
 

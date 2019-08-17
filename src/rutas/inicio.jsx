@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from '../componentes/navbar'
+import Catalogo from '../componentes/catalogo'
 
 
 
@@ -10,7 +11,10 @@ class Login extends Component{
 
   render(){
     return(
-      <Navbar></Navbar>
+      <div className="container">
+        <Navbar></Navbar>
+        <Catalogo></Catalogo>
+      </div>
     )
   }
 }
