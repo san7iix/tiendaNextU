@@ -1,45 +1,60 @@
 import React, {Component} from 'react'
 import fire from '../config/db';
+import Producto from './producto'
 
 class Catalogo extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    this.state = {
+      productos: []
+    }
+    this.app = fire;
+    this.db = this.app.database().ref().child('productos');
   }
 
-  render(){
-    return(
-      <div className="container mt-4 card">
-        <div class="row card-header">
-          <div class="col-md-6">
-            <h1>Catálogo</h1>
-          </div>
-          <div class="col-md-6 col-md-offset-2">
-            <h6>¿Qué estás buscando?</h6>
-          </div>
+  componentDidMount() {
+    const { productos } = this.state;
+    this.db.on('child_added', snap => {
+      productos.push({id: snap.key, precio: snap.val().precio, unidades: snap.val().unidades});
+      this.setState({ productos });
+    });
+    this.db.on('child_removed', snap => {
+      for (let i = 0; i < productos.length; i++) {
+        if (productos[i].id === snap.key) {
+          productos.splice(i, 1);
+        }
+      }
+      this.setState({productos});
+    });
+    console.log(this.state.productos);
+  }
+
+  render() {
+    const productos = this.state.productos.map((productos,i)=>{
+      const imagen = require
+      return(
+        <Producto
+          key={productos.id}
+          img={}
+          nombre={productos.id}
+          precio={productos.precio}
+          unidades={productos.unidades}/>
+      )
+    })
+
+    return (<div className="container mt-4 card">
+      <div className="row card-header">
+        <div className="col-md-6">
+          <h1>Catálogo</h1>
         </div>
-        <div className="row col-md-5 pt-4">
-          <div className="card">
-            <img src="https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2018/10/03/15385788043643.jpg" className="card-img-top" />
-            <div className="card-body">
-              <h5 class="card-title">Ajo</h5>
-              <p class="card-text">Precio </p>
-              <p class="card-text">Unidades disponibles: </p>
-              <div className="row form-inline form-group">
-                <div className="col-xs-4 mr-2 ml-3">
-                  <button className="btn btn-primary">Ver más</button>
-                </div>
-                <div className="col-xs-4 mr-2">
-                  <button className="btn btn-warning">Añadir</button>
-                </div>
-                <div className="col-xs-2">
-                  <input type="number" value="1" className="form-control"/>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="col-md-6 col-md-offset-2">
+          <h6>¿Qué estás buscando?</h6>
         </div>
       </div>
-    )
+      <div className="row pt-4">
+        {productos}
+      </div>
+    </div>)
   }
 }
 
